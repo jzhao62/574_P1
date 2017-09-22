@@ -4,8 +4,8 @@ from matplotlib.mlab import bivariate_normal
 
 import scipy.stats as st
 import math
-
-work_book = load_workbook("/home/jingyi/PycharmProjects/PJ1/university data.xlsx")
+# Change the directory to where you store your data
+work_book = load_workbook("/Users/jingyizhao/PycharmProjects/TensorFlow /university data.xlsx")
 # load sheet
 work_sheet = work_book['university_data']
 rank = []
@@ -51,11 +51,20 @@ px3 = st.norm.pdf(Admin_Base_Pay, loc=mu3, scale=var3)
 px4 = st.norm.pdf(Tuition, loc=mu4, scale=var4)
 
 
-def Loglikehood(px):
+
+
+
+
+
+
+
+
+
+def Loglikehood(px1,px2,px3,px4):
     sum = 0;
-    for e in px:
-        e = math.log(e)
-        sum +=  e
+    for i in range(0, 48):
+        p = px1[i]*px2[i]*px3[i]*px4[i];
+        sum +=  math.log(p)
     return sum
 
 
@@ -73,7 +82,6 @@ def Loglikehood(px):
 def pdf_multivariate_gauss(x, mu, cov):
     '''
     Caculate the multivariate normal density (pdf)
-
     Keyword arguments:
         x = numpy array of a "d x 1" sample vector
         mu = numpy array of a "d x 1" mean vector
@@ -102,6 +110,8 @@ def test_gauss_pdf():
 
 if __name__ == '__main__':
     test_gauss_pdf()
+    sum = Loglikehood(px1,px2,px3,px4);
+    print("Independent Variable Model LogP", sum);
 
 # #
 # print('mu1 = ', mu1)
@@ -121,11 +131,6 @@ if __name__ == '__main__':
 
 # print('covarianceMat=\n', covarianceMat)
 # print('correlationMat=\n', correlationMat)
-print('Loglikehood(px1)=', Loglikehood(px1))
-print('Loglikehood(px2)=', Loglikehood(px2))
-print('Loglikehood(px3)=', Loglikehood(px3))
-print('Loglikehood(px4)=', Loglikehood(px4))
-
 
 
 
